@@ -2,3 +2,7 @@ pandas==2.2.2
 pyarrow==17.0.0
 
 notebook==7.2.2
+python-dotenv==1.0.1
+
+dbt-core==1.8.6
+dbt-bigquery==1.8.2

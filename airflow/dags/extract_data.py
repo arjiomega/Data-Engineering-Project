@@ -1,26 +1,8 @@
 from pendulum import DateTime
-from datetime import datetime, timedelta
 
-from airflow import DAG
-from airflow.operators.python import PythonOperator
+from airflow.decorators import task
 
-default_args = {
-    'owner': 'Richard Omega',
-    'retries': 3,
-    'retry_delay': timedelta(minutes=2)
-}
-
-def get_project_id(gcp_creds_path):
-    import json
-
-    with open(gcp_creds_path) as f:
-        gcp_creds = json.load(f)
-
-    return gcp_creds['project_id']
-
-def get_date(logical_date) -> tuple[str,str]:
-    year, month = logical_date.strftime("%Y"), logical_date.strftime("%m")
-    return year, month
+from utils import get_project_id, get_date
 
 def get_partition_dates(input_df, date_column_name: str):
     input_df['year'] = input_df[date_column_name].dt.year
@@ -29,7 +11,8 @@ def get_partition_dates(input_df, date_column_name: str):
 
     return input_df
 
-def ingest_green_to_gcs(logical_date: DateTime):
+@task
+def extract_green_to_gcs(logical_date: DateTime):
     import pandas as pd
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -57,8 +40,8 @@ def ingest_green_to_gcs(logical_date: DateTime):
         filesystem=gcs
     )
 
-
-def ingest_yellow_to_gcs(logical_date):
+@task
+def extract_yellow_to_gcs(logical_date: DateTime):
     import pandas as pd
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -86,25 +69,8 @@ def ingest_yellow_to_gcs(logical_date):
         filesystem=gcs
     )
 
-
-with DAG(
-    dag_id = 'ingest_cab_data_to_gcs_v01',
-    default_args = default_args,
-    start_date=datetime(2020,1,1),
-    schedule_interval='@monthly',
-    max_active_runs=5
-) as dag:
-    from dotenv import load_dotenv
-    load_dotenv()
-
-    task1 = PythonOperator(
-        task_id = "ingest_green_to_gcs",
-        python_callable = ingest_green_to_gcs
-    )
-
-    task2 = PythonOperator(
-        task_id = "ingest_yellow_to_gcs",
-        python_callable = ingest_yellow_to_gcs
-    )
-
-    [task1, task2]
+class ExtractTasks:
+    def extract_green(*args, **kwargs):
+        return extract_green_to_gcs(*args, **kwargs)
+    def extract_yellow(*args, **kwargs):
+        return extract_yellow_to_gcs(*args, **kwargs)
