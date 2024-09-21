@@ -2,8 +2,8 @@ version: 1
 
 sources:
   - name: staging
-    database: de-project-1-434708
-    schema: nyc_taxi_data
+    database: "{{ env_var('DBT_GOOGLE_PROJECT_DEV') }}"
+    schema: "{{ env_var('DBT_GOOGLE_BIGQUERY_DATASET_DEV') }}"
 
     tables:
       - name: raw_yellow_cab_data

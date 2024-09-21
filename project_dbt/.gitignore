@@ -1,5 +1,5 @@
 
 target/
 dbt_packages/
-logs/
+dbt_logs/
 package-lock.yml
