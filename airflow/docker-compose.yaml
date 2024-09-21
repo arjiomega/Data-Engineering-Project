@@ -49,8 +49,10 @@ x-airflow-common:
   # In order to add custom dependencies or upgrade provider packages you can use your extended image.
   # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
   # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
-  image: ${AIRFLOW_IMAGE_NAME:-extending_airflow:latest}
-  # build: .
+  # image: ${AIRFLOW_IMAGE_NAME:-extending_airflow:latest}
+  build:
+    context: ../
+    dockerfile: airflow/Dockerfile
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
@@ -72,11 +74,29 @@ x-airflow-common:
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
+    # DBT ENV VARS
+    DBT_GOOGLE_BIGQUERY_KEYFILE_DEV: ${DBT_GOOGLE_BIGQUERY_KEYFILE_DEV}
+    DBT_GOOGLE_PROJECT_DEV: ${DBT_GOOGLE_PROJECT_DEV}
+    DBT_GOOGLE_BIGQUERY_DATASET_DEV: ${DBT_GOOGLE_BIGQUERY_DATASET_DEV}
+    DBT_PROFILES_DIR: ${DBT_PROFILES_DIR}
+    # AIRFLOW ENV VARS
+    AIRFLOW_UID: ${AIRFLOW_UID}
+    GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
+    DATA_GROUP_NAME: ${DATA_GROUP_NAME}
+    CAB_DATA_BASE_URL: ${CAB_DATA_BASE_URL}
+
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+    - ../project_dbt/dbt_analyses:/opt/airflow/dbt_analyses
+    - ../project_dbt/dbt_macros:/opt/airflow/dbt_macros
+    - ../project_dbt/dbt_models:/opt/airflow/dbt_models
+    - ../project_dbt/dbt_seeds:/opt/airflow/dbt_seeds
+    - ../project_dbt/dbt_snapshots:/opt/airflow/dbt_snapshots
+    - ../project_dbt/dbt_tests:/opt/airflow/dbt_tests
+
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on

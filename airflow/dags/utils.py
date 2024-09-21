@@ -13,9 +13,10 @@ def get_project_id(gcp_creds_path):
     with open(gcp_creds_path) as f:
         gcp_creds = json.load(f)
 
-    return gcp_creds['project_id']
+    return gcp_creds["project_id"]
 
-def get_date(logical_date) -> tuple[str,str]:
+
+def get_date(logical_date) -> tuple[str, str]:
     """
     Extracts the year and month from a logical date object and returns them as strings.
 
@@ -28,6 +29,7 @@ def get_date(logical_date) -> tuple[str,str]:
     year, month = logical_date.strftime("%Y"), logical_date.strftime("%m")
     return year, month
 
+
 def parquet_reader(logical_date):
     import os
 
@@ -37,10 +39,10 @@ def parquet_reader(logical_date):
     year, month = get_date(logical_date)
 
     gs = pa.fs.GcsFileSystem()
-    project_id = get_project_id(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
-    
+    project_id = get_project_id(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+
     BUCKET_NAME = f"{project_id}-bucket"
-    DATA_GROUP_NAME = os.environ['DATA_GROUP_NAME']
+    DATA_GROUP_NAME = os.environ["DBT_GOOGLE_BIGQUERY_DATASET_DEV"]
 
     root_path = f"{BUCKET_NAME}/{DATA_GROUP_NAME}/yellow_cab_data/raw/year={year}/month={int(month)}"
 
