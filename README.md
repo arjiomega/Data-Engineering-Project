@@ -12,6 +12,7 @@
 2. [Setup](#setup)
 
     1. [Setup Airflow](#setup-airflow)
+    2. [Setup GCP Account](#setup-gcp-account)
 
 ## Project Overview
 
@@ -119,4 +120,14 @@ If needed, you can stop the Airflow services with:
 ```bash
 docker compose --env-file .env -f airflow/docker-compose.yaml down
 ```
+
+### Setup GCP Account
+
+1. Create service account and add the following roles
+bigquery admin
+cloud storage admin
+
+2. download key in json format and save to keys directory as gcp-creds.json
+
+
 
