@@ -14,7 +14,7 @@ default_args = {
 
 
 with DAG(
-    dag_id="nyc_tlc_elt_dag_v01",
+    dag_id="nyc_tlc_elt_dag_v05",
     default_args=default_args,
     start_date=datetime(2024, 1, 1),
     schedule_interval="@monthly",
@@ -31,6 +31,7 @@ with DAG(
     staging_tasks = transform_data.StagingTasks()
 
     load_tasks.create_empty_dataset()
+    extract_tasks.create_bucket()
 
     green_flow = (
         extract_tasks.extract_green()

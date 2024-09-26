@@ -81,7 +81,7 @@ class LoadTasks:
             BigQueryCreateEmptyDatasetOperator: An operator for creating an empty BigQuery dataset.
         """
         return BigQueryCreateEmptyDatasetOperator(
-            task_id=f"create_airflow_{self.DATASET_NAME}_dataset",
+            task_id=f"create_bigquery_{self.DATASET_NAME}_dataset",
             gcp_conn_id="google_cloud_default",
             dataset_id=self.DATASET_NAME,
             if_exists="log",
