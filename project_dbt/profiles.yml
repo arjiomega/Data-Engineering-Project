@@ -5,7 +5,7 @@ project_dbt:
       dataset: "{{ env_var('DBT_GOOGLE_BIGQUERY_DATASET_DEV') }}"
       job_execution_timeout_seconds: 300
       job_retries: 1
-      keyfile: "{{ env_var('DBT_GOOGLE_BIGQUERY_KEYFILE_DEV') }}"
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
       location: US
       method: service-account
       priority: interactive

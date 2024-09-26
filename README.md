@@ -93,9 +93,12 @@ echo -e "AIRFLOW_UID=$(id -u)" > .env
 complete `.env` file with:
 ```.env
 AIRFLOW_UID=1000
-GOOGLE_APPLICATION_CREDENTIALS='./keys/gcp-creds.json'
-DATA_GROUP_NAME='nyc_taxi_data'
 CAB_DATA_BASE_URL='https://d37ci6vzurychx.cloudfront.net/trip-data'
+
+GOOGLE_APPLICATION_CREDENTIALS='./keys/gcp-creds.json'
+DBT_GOOGLE_PROJECT_DEV=<project_name>
+DBT_GOOGLE_BIGQUERY_DATASET_DEV='nyc_taxi_data'
+DBT_PROFILES_DIR='./'
 ```
 - make sure gcp-creds.json is in keys directory
 - `CAB_DATA_BASE_URL` may change in the future. if that happens, update it from [nyc tlc trip record data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)

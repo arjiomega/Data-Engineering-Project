@@ -75,7 +75,6 @@ x-airflow-common:
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
     # DBT ENV VARS
-    DBT_GOOGLE_BIGQUERY_KEYFILE_DEV: ${DBT_GOOGLE_BIGQUERY_KEYFILE_DEV}
     DBT_GOOGLE_PROJECT_DEV: ${DBT_GOOGLE_PROJECT_DEV}
     DBT_GOOGLE_BIGQUERY_DATASET_DEV: ${DBT_GOOGLE_BIGQUERY_DATASET_DEV}
     DBT_PROFILES_DIR: ${DBT_PROFILES_DIR}
