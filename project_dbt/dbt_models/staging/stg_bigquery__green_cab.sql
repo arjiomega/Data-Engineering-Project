@@ -8,9 +8,12 @@ with green_cab_data as (
     select
 
         -- identifiers
-        {{ dbt_utils.generate_surrogate_key(['VendorID', 'lpep_pickup_datetime', 'PULocationID']) }} as trip_id,
-        
-        VendorID as vendor_id,
+        {{ dbt_utils.generate_surrogate_key(['VendorID', 'lpep_pickup_datetime', 'lpep_dropoff_datetime', 'PULocationID', 'DOLocationID', "'green'"]) }} as trip_id,
+        CASE
+            WHEN VendorID < 1 THEN NULL
+            WHEN VendorID > 2 THEN NULL
+            ELSE VendorID
+        END as vendor_id,
         CASE
             WHEN VendorID=1 THEN 'Creative Mobile Technologies, LLC'
             WHEN VendorID=2 THEN 'VeriFone Inc.'
@@ -74,6 +77,40 @@ with green_cab_data as (
 
         {{ null_negative_and_zero_values('total_amount') }} AS total_amount,
 
-    from {{ source('staging', 'raw_green_cab_data') }}
+    FROM {{ source('raw', 'raw_green_cab_data') }}
+),
+green_no_dups as (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (PARTITION BY trip_id ORDER BY pickup_datetime) AS dup_rank
+    FROM green_cab_data
 )
-select * from green_cab_data
+SELECT 
+    trip_id,
+    vendor_id,
+    vendor_description,
+    ratecode_id,
+    pickup_location_id,
+    dropoff_location_id,
+    pickup_datetime,
+    dropoff_datetime,
+    trip_distance_in_miles,
+    trip_distance_in_km,
+    trip_duration_minutes,
+    passenger_count,
+    record_stored_before_send,
+    trip_type,
+    trip_type_description,
+    payment_type,
+    payment_type_description,
+    fare_amount,
+    tip_amount,
+    tolls_amount,
+    extra_fee,
+    ehail_fee,
+    mta_tax,
+    improvement_surcharge,
+    congestion_surcharge,
+    total_amount
+FROM green_no_dups
+WHERE dup_rank = 1

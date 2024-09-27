@@ -1,7 +1,7 @@
 version: 1
 
 sources:
-  - name: staging
+  - name: raw
     database: "{{ env_var('DBT_GOOGLE_PROJECT_DEV') }}"
     schema: "{{ env_var('DBT_GOOGLE_BIGQUERY_DATASET_DEV') }}"
 
