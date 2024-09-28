@@ -10,8 +10,7 @@ with green_cab_data as (
         -- identifiers
         {{ dbt_utils.generate_surrogate_key(['VendorID', 'lpep_pickup_datetime', 'lpep_dropoff_datetime', 'PULocationID', 'DOLocationID', "'green'"]) }} as trip_id,
         CASE
-            WHEN VendorID < 1 THEN NULL
-            WHEN VendorID > 2 THEN NULL
+            WHEN VendorID < 1 OR VendorID > 2 THEN NULL
             ELSE VendorID
         END as vendor_id,
         CASE
@@ -24,6 +23,16 @@ with green_cab_data as (
             WHEN CAST(RatecodeID as INTEGER) < 1 OR CAST(RatecodeID as INTEGER) > 6 THEN NULL
             ELSE CAST(RatecodeID as INTEGER)
         END as ratecode_id,
+
+        CASE
+            WHEN CAST(RatecodeID as INTEGER) = 1 THEN 'Standard rate'
+            WHEN CAST(RatecodeID as INTEGER) = 2 THEN 'JFK'
+            WHEN CAST(RatecodeID as INTEGER) = 3 THEN 'Newark'
+            WHEN CAST(RatecodeID as INTEGER) = 4 THEN 'Nassau or Westchester'
+            WHEN CAST(RatecodeID as INTEGER) = 5 THEN 'Negotiated Fare'
+            WHEN CAST(RatecodeID as INTEGER) = 6 THEN 'Group Ride'
+            ELSE NULL
+        END as ratecode_description,
 
         PULocationID as pickup_location_id,
         DOLocationID as dropoff_location_id,
@@ -90,6 +99,7 @@ SELECT
     vendor_id,
     vendor_description,
     ratecode_id,
+    ratecode_description,
     pickup_location_id,
     dropoff_location_id,
     pickup_datetime,

@@ -10,8 +10,7 @@ with yellow_cab_data as (
         -- identifiers
         {{ dbt_utils.generate_surrogate_key(['VendorID', 'tpep_pickup_datetime', 'tpep_dropoff_datetime', 'PULocationID', 'DOLocationID', "'yellow'"]) }} as trip_id,
         CASE
-            WHEN VendorID < 1 THEN NULL
-            WHEN VendorID > 2 THEN NULL
+            WHEN VendorID < 1 OR VendorID > 2 THEN NULL
             ELSE VendorID
         END as vendor_id,
         CASE
@@ -24,6 +23,16 @@ with yellow_cab_data as (
             WHEN CAST(RatecodeID as INTEGER) < 1 OR CAST(RatecodeID as INTEGER) > 6 THEN NULL
             ELSE CAST(RatecodeID as INTEGER)
         END as ratecode_id,
+
+        CASE
+            WHEN CAST(RatecodeID as INTEGER) = 1 THEN 'Standard rate'
+            WHEN CAST(RatecodeID as INTEGER) = 2 THEN 'JFK'
+            WHEN CAST(RatecodeID as INTEGER) = 3 THEN 'Newark'
+            WHEN CAST(RatecodeID as INTEGER) = 4 THEN 'Nassau or Westchester'
+            WHEN CAST(RatecodeID as INTEGER) = 5 THEN 'Negotiated Fare'
+            WHEN CAST(RatecodeID as INTEGER) = 6 THEN 'Group Ride'
+            ELSE NULL
+        END as ratecode_description,
 
         PULocationID as pickup_location_id,
         DOLocationID as dropoff_location_id,
@@ -46,6 +55,12 @@ with yellow_cab_data as (
             ELSE NULL 
         END AS record_stored_before_send,
 
+        -- yellow cabs are street hailed
+        CAST(1 as INTEGER) as trip_type,
+
+        -- string is used instead of varchar in bigquery
+        CAST('Street-hail' AS STRING) as trip_type_description,
+
         -- payment info
         {{ null_zero_values('CAST(payment_type as INTEGER)') }} as payment_type,
         CASE
@@ -63,6 +78,10 @@ with yellow_cab_data as (
         {{ null_negative_values('tip_amount') }} AS tip_amount,
         {{ null_negative_values('tolls_amount') }} AS tolls_amount,
         {{ null_negative_values('extra') }} AS extra_fee,
+
+        -- yellow cabs are street hailed so no ehail_fee
+        CAST(0 AS NUMERIC) AS ehail_fee,
+
         {{ null_negative_values('mta_tax') }} AS mta_tax,
         {{ null_negative_values('improvement_surcharge') }} AS improvement_surcharge,
         {{ null_negative_values('congestion_surcharge') }} AS congestion_surcharge,
@@ -83,6 +102,7 @@ SELECT
     vendor_id,
     vendor_description,
     ratecode_id,
+    ratecode_description,
     pickup_location_id,
     dropoff_location_id,
     pickup_datetime,
@@ -92,12 +112,15 @@ SELECT
     trip_duration_minutes,
     passenger_count,
     record_stored_before_send,
+    trip_type,
+    trip_type_description,
     payment_type,
     payment_type_description,
     fare_amount,
     tip_amount,
     tolls_amount,
     extra_fee,
+    ehail_fee,
     mta_tax,
     improvement_surcharge,
     congestion_surcharge,

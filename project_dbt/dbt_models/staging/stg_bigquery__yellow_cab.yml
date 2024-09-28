@@ -64,6 +64,29 @@ models:
               where: "ratecode_id IS NOT NULL"
               quote: false
               
+      - name: ratecode_description
+        data_type: string
+        description: >
+          The final rate code in effect at the end of the trip.
+          1= Standard rate
+          2=JFK
+          3=Newark
+          4=Nassau or Westchester
+          5=Negotiated fare
+          6=Group ride
+        data_tests:
+          - accepted_values:
+              values: [
+                'Standard rate',
+                'JFK',
+                'Newark',
+                'Nassau or Westchester',
+                'Negotiated Fare',
+                'Group ride'
+              ]
+              where: "ratecode_description IS NOT NULL"
+
+
       - name: pickup_location_id
         data_type: int64
         description: TLC Taxi Zone in which the taximeter was engaged.
@@ -123,6 +146,31 @@ models:
           - accepted_values:
               values: [true,false]
               quote: false
+
+      - name: trip_type
+        data_type: int64
+        description: >
+          A code indicating whether the trip was a street-hail or a dispatch
+          that is automatically assigned based on the metered rate in use but
+          can be altered by the driver.
+          1= Street-hail
+          2= Dispatch
+        data_tests:
+          - accepted_values:
+              values: [1]
+              quote: false
+
+      - name: trip_type_description
+        data_type: string
+        description: >
+          A code indicating whether the trip was a street-hail or a dispatch
+          that is automatically assigned based on the metered rate in use but
+          can be altered by the driver.
+          1= Street-hail
+          2= Dispatch
+        data_tests:
+          - accepted_values:
+              values: ['Street-hail']
 
       - name: payment_type
         data_type: int64
@@ -191,6 +239,16 @@ models:
         data_tests:
           - dbt_utils.expression_is_true:
               expression: '>= 0.0'
+
+      - name: ehail_fee
+        data_type: float64
+        description: >
+          Fee charged for trips that were booked using an e-hail service 
+          (e.g., a ride-hailing app). This fee is applicable only if the 
+          trip was arranged through such a service.
+        data_tests:
+          - dbt_utils.expression_is_true:
+              expression: '= 0.0'
 
       - name: mta_tax
         data_type: float64
