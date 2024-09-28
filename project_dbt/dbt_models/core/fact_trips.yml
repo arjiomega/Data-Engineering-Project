@@ -1,0 +1,10 @@
+version: 1
+
+sources:
+  - name: staging
+    database: "{{ env_var('DBT_GOOGLE_PROJECT_DEV') }}"
+    schema: "{{ env_var('DBT_GOOGLE_BIGQUERY_DATASET_DEV') }}"
+
+    tables:
+      - name: stg_bigquery__green_cab
+      - name: stg_bigquery__yellow_cab
