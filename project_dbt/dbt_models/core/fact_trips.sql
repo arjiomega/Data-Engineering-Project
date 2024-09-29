@@ -19,15 +19,15 @@ with combined_trips as (
 )
 SELECT 
     ROW_NUMBER() OVER () as trip_id,
-    vendor_id,
-    ratecode_id,
-    pickup_location_id,
-    dropoff_location_id,
+    combined_trips.vendor_id,
+    combined_trips.ratecode_id,
+    combined_trips.pickup_location_id,
+    combined_trips.dropoff_location_id,
     dim_time.trip_time_id,
     dim_distance.distance_id,
-    data_handling_id,
-    payment_method_id,
-    trip_type_id,
+    dim_data_handling.data_handling_id,
+    combined_trips.payment_type as payment_method_id,
+    combined_trips.trip_type as trip_type_id,
 
     combined_trips.passenger_count,
     combined_trips.fare_amount,
@@ -49,3 +49,11 @@ LEFT JOIN {{ ref('dim_time') }} dim_time
 
 LEFT JOIN {{ ref('dim_distance') }} dim_distance
     ON combined_trips.trip_distance_in_miles = dim_distance.trip_distance_in_miles
+
+LEFT JOIN {{ ref('dim_location') }} dim_location
+    ON combined_trips.pickup_location_id = dim_location.location_id
+
+LEFT JOIN {{ ref('dim_data_handling') }} dim_data_handling
+    ON combined_trips.record_stored_before_send = dim_data_handling.record_stored_before_send
+
+-- add a test to see if location_ids are in dim_location

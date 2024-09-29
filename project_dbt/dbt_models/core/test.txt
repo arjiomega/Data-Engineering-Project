@@ -1,0 +1,59 @@
+fact_trips	
+PK	trip_id	
+FK	vendor_id	
+FK	ratecode_id	
+FK	pickup_location_id	
+FK	drop_off_location_id	
+FK	trip_time_id	
+FK	distance_id	
+FK	data_handling_id	
+FK	passenger_id	
+FK	payment_method_id	
+FK	trip_type_id	
+	passenger_count	
+	fare_amount		
+	tip_amount		
+	tolls_amount		
+	extra_fee	
+	ehail_fee	
+	mta_tax	
+	improvement_surcharge	
+	congestion_surcharge	
+	total_amount
+
+dim_location (DONE)
+PK	location_id		
+	borough	
+	zone		
+	service_zone	
+
+dim_distance (DONE)
+PK	distance_id	
+	trip_distance_in_miles	
+    trip_distance_in_km
+
+dim_data_handling (DONE)
+PK	data_handling_id	
+	record_stored_before_send
+
+dim_trip_type (DONE)
+PK	trip_type_id	
+	trip_type_description
+
+dim_vendor (DONE)
+PK	vendor_id	
+	vendor_description
+
+dim_ratecode	
+PK	ratecode_id	
+	ratecode_description
+
+dim_time (DONE)
+PK	trip_time_id	
+	pickup_datetime	
+    dropoff_datetime	
+    trip_duration_minutes
+
+dim_payment_method (DONE)
+PK	payment_method_id	
+	payment_method_description
