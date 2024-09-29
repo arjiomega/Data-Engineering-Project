@@ -33,6 +33,11 @@ The data source for this project is the NYC TLC (Taxi and Limousine Commission) 
     Trip Records: Details of individual taxi trips, including pickup and dropoff locations, fare amounts, and more.
     Frequency of Updates: The data is regularly updated, reflecting ongoing taxi trip records.
 
+### Data Warehouse Design
+
+**Data Warehouse Star Schema**
+![nyc_tlc_trip_star_schema](https://raw.githubusercontent.com/arjiomega/Data-Engineering-Project/refs/heads/main/resources/nyc_tlc_trip_star_schema.png)
+
 ### ELT/ETL Process
 
 The ELT (Extract, Load, Transform) process for this project is as follows:
