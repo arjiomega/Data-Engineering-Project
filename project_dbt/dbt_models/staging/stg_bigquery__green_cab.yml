@@ -63,29 +63,7 @@ models:
               values: [1,2,3,4,5,6]
               where: "ratecode_id IS NOT NULL"
               quote: false
-
-      - name: ratecode_description
-        data_type: string
-        description: >
-          The final rate code in effect at the end of the trip.
-          1= Standard rate
-          2=JFK
-          3=Newark
-          4=Nassau or Westchester
-          5=Negotiated fare
-          6=Group ride
-        data_tests:
-          - accepted_values:
-              values: [
-                'Standard rate',
-                'JFK',
-                'Newark',
-                'Nassau or Westchester',
-                'Negotiated Fare',
-                'Group ride'
-              ]
-              where: "ratecode_description IS NOT NULL"
-
+              
       - name: pickup_location_id
         data_type: int64
         description: TLC Taxi Zone in which the taximeter was engaged.
