@@ -22,6 +22,6 @@ unique_distance as (
 )
 SELECT
     ROW_NUMBER() OVER () as distance_id,
-    trip_distance_in_miles	
+    trip_distance_in_miles,
     trip_distance_in_km
 FROM unique_distance
