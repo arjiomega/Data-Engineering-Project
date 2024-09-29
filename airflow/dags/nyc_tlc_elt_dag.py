@@ -14,15 +14,17 @@ default_args = {
 
 
 with DAG(
-    dag_id="nyc_tlc_elt_dag_v05",
+    dag_id="nyc_tlc_elt_dag_v07",
     default_args=default_args,
     start_date=datetime(2024, 1, 1),
     schedule_interval="@monthly",
-    max_active_runs=1,
+    max_active_runs=2,
 ) as dag:
     from dotenv import load_dotenv
 
     load_dotenv()
+
+    transform_data.load_seeds()
 
     extract_tasks = extract_data.ExtractTasks()
     load_tasks = load_data.LoadTasks()
