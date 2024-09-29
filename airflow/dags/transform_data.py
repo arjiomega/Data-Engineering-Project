@@ -1,6 +1,12 @@
 from typing import Literal
 from airflow.operators.bash import BashOperator
 
+def load_seeds():
+    return BashOperator(
+        task_id="load_seeds",
+        bash_command=f"dbt seed",
+        cwd='/opt/airflow'
+    )
 
 class StagingTasks:
     def __init__(self) -> None:
