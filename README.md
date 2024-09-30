@@ -1,5 +1,7 @@
 # Data-Engineering-Project
 
+![pipeline](https://raw.githubusercontent.com/arjiomega/Data-Engineering-Project/refs/heads/main/resources/pipeline.png)
+
 ## Table of Contents
 1. [Project Overview](#project-overview)
 
