@@ -8,3 +8,70 @@ sources:
     tables:
       - name: stg_bigquery__green_cab
       - name: stg_bigquery__yellow_cab
+
+models:
+  - name: fact_trips
+    description:
+    columns:
+      - name: trip_id
+        data_type: int64
+        description:
+      - name: vendor_id
+        data_type: int64
+        description:
+      - name: ratecode_id
+        data_type: int64
+        description:
+      - name: pickup_location_id
+        data_type: int64
+        description:
+      - name: dropoff_location_id
+        data_type: int64
+        description:
+      - name: trip_time_id
+        data_type: int64
+        description:
+      - name: distance_id
+        data_type: int64
+        description:
+      - name: data_handling_id
+        data_type: int64
+        description:
+      - name: payment_method_id
+        data_type: int64
+        description:
+      - name: trip_type_id
+        data_type: int64
+        description:
+      - name: passenger_count
+        data_type: int64
+        description:
+      - name: fare_amount
+        data_type: float64
+        description:
+      - name: tip_amount
+        data_type: float64
+        description:
+      - name: tolls_amount
+        data_type: float64
+        description:
+      - name: extra_fee
+        data_type: float64
+        description:
+      - name: ehail_fee
+        data_type: float64
+        description:
+      - name: mta_tax
+        data_type: float64
+        description:
+      - name: improvement_surcharge
+        data_type: float64
+        description:
+      - name: congestion_surcharge
+        data_type: float64
+        description:
+      - name: total_amount
+        data_type: float64
+        description:
+        
+      
