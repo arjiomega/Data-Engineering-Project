@@ -1,89 +1,89 @@
 models:
   - name: dim_data_handling
-    description:
+    description: ''
     columns:
       - name: data_handling_id
         data_type: int64
-        description:
+        description: ''
       - name: record_stored_before_send
         data_type: string
-        description:
+        description: ''
   - name: dim_distance
-    description:
+    description: ''
     columns:
       - name: distance_id
         data_type: int64
-        description:
+        description: ''
       - name: trip_distance_in_miles
         data_type: float64
-        description:
+        description: ''
       - name: trip_distance_in_km
         data_type: float64
-        description:
+        description: ''
   - name: dim_location
-    description:
+    description: ''
     columns:
       - name: location_id
         data_type: int64
-        description:
+        description: ''
       - name: borough
         data_type: string
-        description:
+        description: ''
       - name: zone
         data_type: string
-        description:
+        description: ''
       - name: service_zone
         data_type: string
-        description:
+        description: ''
   - name: dim_payment_method
-    description:
+    description: ''
     columns:
       - name: payment_method_id
         data_type: int64
-        description:
+        description: ''
       - name: payment_method_description
         data_type: string
-        description:
+        description: ''
   - name: dim_ratecode
-    description:
+    description: ''
     columns:
       - name: ratecode_id
         data_type: int64
-        description:
+        description: ''
       - name: ratecode_description
         data_type: string
-        description:
+        description: ''
   - name: dim_time
-    description:
+    description: ''
     columns:
       - name: trip_time_id
         data_type: int64
-        description:
+        description: ''
       - name: pickup_datetime
         data_type: timestamp
-        description:
+        description: ''
       - name: dropoff_datetime
         data_type: timestamp
-        description:
+        description: ''
       - name: trip_duration_minutes
         data_type: int64
-        description:
+        description: ''
   - name: dim_trip_type
-    description:
+    description: ''
     columns:
       - name: trip_type_id
         data_type: int
-        description:
+        description: ''
       - name: trip_type_description
         data_type: string
-        description:
+        description: ''
   - name: dim_vendor
-    description:
+    description: ''
     columns:
       - name: vendor_id
         data_type: int64
-        description:
+        description: ''
       - name: vendor_description
         data_type: string
-        description:
+        description: ''
   
