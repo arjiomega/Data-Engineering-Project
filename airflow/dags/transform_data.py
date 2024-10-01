@@ -32,3 +32,14 @@ class StagingTasks:
 
     def test_staging_yellow(self):
         return self._staging_task(task="test", data_name="yellow")
+
+class DataWarehouseTasks:
+    def __init__(self) -> None:
+        pass
+
+    def build_datawarehouse(self):
+        return BashOperator(
+            task_id=f"build_data_warehouse",
+            bash_command=f"dbt run --select core",
+            cwd='/opt/airflow'
+        )

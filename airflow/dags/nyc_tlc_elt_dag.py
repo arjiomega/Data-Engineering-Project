@@ -31,6 +31,7 @@ with DAG(
 
     # transform
     staging_tasks = transform_data.StagingTasks()
+    data_warehouse_tasks = transform_data.DataWarehouseTasks()
 
     load_tasks.create_empty_dataset()
     extract_tasks.create_bucket()
@@ -48,6 +49,5 @@ with DAG(
         >> staging_tasks.run_staging_yellow()
         >> staging_tasks.test_staging_yellow()
     )
-
-    green_flow
-    yellow_flow
+    
+    [green_flow, yellow_flow] >> data_warehouse_tasks.build_datawarehouse()
