@@ -8,17 +8,17 @@ import extract_data, load_data, transform_data
 
 default_args = {
     "owner": "Richard Omega",
-    "retries": 3,
+    "retries": 1,
     "retry_delay": timedelta(minutes=2),
 }
 
 
 with DAG(
-    dag_id="nyc_tlc_elt_dag_v07",
+    dag_id="nyc_tlc_elt_dag_v10",
     default_args=default_args,
-    start_date=datetime(2024, 1, 1),
+    start_date=datetime(2015, 1, 1),
     schedule_interval="@monthly",
-    max_active_runs=2,
+    max_active_runs=1,
 ) as dag:
     from dotenv import load_dotenv
 
