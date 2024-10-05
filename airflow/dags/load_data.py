@@ -19,7 +19,7 @@ yellow_cab_schema = [
     {"name": "store_and_fwd_flag", "type": "STRING", "mode": "NULLABLE"},
     {"name": "PULocationID", "type": "INTEGER", "mode": "NULLABLE"},
     {"name": "DOLocationID", "type": "INTEGER", "mode": "NULLABLE"},
-    {"name": "payment_type", "type": "INTEGER", "mode": "NULLABLE"},
+    {"name": "payment_type", "type": "FLOAT", "mode": "NULLABLE"},
     {"name": "fare_amount", "type": "FLOAT", "mode": "NULLABLE"},
     {"name": "extra", "type": "FLOAT", "mode": "NULLABLE"},
     {"name": "mta_tax", "type": "FLOAT", "mode": "NULLABLE"},
