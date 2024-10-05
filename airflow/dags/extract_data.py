@@ -30,6 +30,8 @@ yellow_cab_dtype_mapping = {
 green_cab_dtype_mapping = yellow_cab_dtype_mapping.copy()
 green_cab_dtype_mapping.update(
     {
+        "lpep_pickup_datetime": "datetime64",
+        "lpep_dropoff_datetime": "datetime64",
         "ehail_fee": "float64",
         "trip_type": "float64"
     }
