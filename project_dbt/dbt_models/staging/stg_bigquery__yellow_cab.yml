@@ -32,7 +32,6 @@ models:
           1= Creative Mobile Technologies, LLC; 
           2= VeriFone Inc.
         data_tests:
-          - not_null
           - accepted_values:
               values: [1,2]
               quote: false
@@ -44,7 +43,6 @@ models:
           1= Creative Mobile Technologies, LLC; 
           2= VeriFone Inc.
         data_tests:
-          - not_null
           - accepted_values:
               values: ['Creative Mobile Technologies, LLC', 'VeriFone Inc.']
 

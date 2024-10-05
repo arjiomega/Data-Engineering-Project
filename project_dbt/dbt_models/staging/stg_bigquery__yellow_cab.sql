@@ -30,7 +30,7 @@ with yellow_cab_data as (
             WHEN CAST(RatecodeID as INTEGER) = 3 THEN 'Newark'
             WHEN CAST(RatecodeID as INTEGER) = 4 THEN 'Nassau or Westchester'
             WHEN CAST(RatecodeID as INTEGER) = 5 THEN 'Negotiated Fare'
-            WHEN CAST(RatecodeID as INTEGER) = 6 THEN 'Group Ride'
+            WHEN CAST(RatecodeID as INTEGER) = 6 THEN 'Group ride'
             ELSE NULL
         END as ratecode_description,
 
