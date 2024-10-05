@@ -7,8 +7,8 @@ from utils import get_project_id, get_date
 
 yellow_cab_dtype_mapping = {
     "VendorID": "int64",
-    "tpep_pickup_datetime": "datetime64[ns]",
-    "tpep_dropoff_datetime": "datetime64[ns]",
+    "tpep_pickup_datetime": "datetime64",
+    "tpep_dropoff_datetime": "datetime64",
     "passenger_count": "float64",
     "trip_distance": "float64",
     "RatecodeID": "float64",
@@ -29,8 +29,8 @@ yellow_cab_dtype_mapping = {
 
 green_cab_dtype_mapping = {
     "VendorID": "int64",
-    "lpep_pickup_datetime": "datetime64[ns]",
-    "lpep_dropoff_datetime": "datetime64[ns]",
+    "lpep_pickup_datetime": "datetime64",
+    "lpep_dropoff_datetime": "datetime64",
     "passenger_count": "float64",
     "trip_distance": "float64",
     "RatecodeID": "float64",
