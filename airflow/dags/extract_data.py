@@ -1,8 +1,39 @@
+from collections import defaultdict
+from typing import Literal
 from airflow.providers.google.cloud.operators.gcs import GCSCreateBucketOperator
 from airflow.operators.python import PythonOperator
 
 from utils import get_project_id, get_date
 
+yellow_cab_dtype_mapping = {
+    "VendorID": "int64",
+    "tpep_pickup_datetime": "datetime64",
+    "tpep_dropoff_datetime": "datetime64",
+    "passenger_count": "float64",
+    "trip_distance": "float64",
+    "RatecodeID": "float64",
+    "store_and_fwd_flag": "object",
+    "PULocationID": "int64",
+    "DOLocationID": "int64",
+    "payment_type": "int64",
+    "fare_amount": "float64",
+    "extra": "float64",
+    "mta_tax": "float64",
+    "tip_amount": "float64",
+    "tolls_amount": "float64",
+    "improvement_surcharge": "float64",
+    "total_amount": "float64",
+    "congestion_surcharge": "float64",
+    "airport_fee": "float64"
+}
+
+green_cab_dtype_mapping = yellow_cab_dtype_mapping.copy()
+green_cab_dtype_mapping.update(
+    {
+        "ehail_fee": "float64",
+        "trip_type": "float64"
+    }
+)
 
 class ExtractTasks:
     def __init__(self) -> None:
@@ -21,16 +52,19 @@ class ExtractTasks:
 
         return input_df
 
-    def _extract_data_to_gcs(self, data_name, logical_date):
+    def _extract_data_to_gcs(self, data_name: Literal['green', 'yellow'], logical_date):
         import pandas as pd
         import pyarrow as pa
         import pyarrow.parquet as pq
 
         year, month = get_date(logical_date)
         
+        dtype = yellow_cab_dtype_mapping if data_name == 'yellow' else green_cab_dtype_mapping
+
         df = pd.read_parquet(
-            f"{self.CAB_DATA_BASE_URL}/{data_name}_tripdata_{year}-{month}.parquet"
-        )
+            f"{self.CAB_DATA_BASE_URL}/{data_name}_tripdata_{year}-{month}.parquet",
+        ).astype(dtype)
+
         date_column_name = (
             "tpep_pickup_datetime" if data_name == "yellow" else "lpep_pickup_datetime"
         )
