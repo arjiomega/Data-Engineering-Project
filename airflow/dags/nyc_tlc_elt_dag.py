@@ -14,7 +14,7 @@ default_args = {
 
 
 with DAG(
-    dag_id="nyc_tlc_elt_dag_v10",
+    dag_id="nyc_tlc_elt_dag_v12",
     default_args=default_args,
     start_date=datetime(2015, 1, 1),
     schedule_interval="@monthly",
