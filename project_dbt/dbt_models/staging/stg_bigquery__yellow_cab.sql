@@ -42,8 +42,8 @@ with yellow_cab_data as (
         tpep_dropoff_datetime as dropoff_datetime,
 
         -- trip info
-        {{ null_zero_values('trip_distance') }} AS trip_distance_in_miles,
-        {{ null_zero_values('ROUND(trip_distance*1.60934, 2)') }} AS trip_distance_in_km,
+        {{ null_negative_and_zero_values('trip_distance') }} AS trip_distance_in_miles,
+        {{ null_negative_and_zero_values('ROUND(trip_distance*1.60934, 2)') }} AS trip_distance_in_km,
 
         TIMESTAMP_DIFF(tpep_dropoff_datetime, tpep_pickup_datetime, MINUTE) as trip_duration_minutes,
 
