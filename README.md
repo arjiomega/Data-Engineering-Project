@@ -6,7 +6,7 @@
 1. [Project Overview](#project-overview)
 
     1. [Data Sources](#data-sources)
-    2. [ELT/ETL Process](#eltetl-process)
+    2. [ELT/ETL Process](#elt-process)
     3. [Technologies](#technologies)
     4. [Use Cases](#use-cases)
     5. [Challenges](#challenges)
@@ -40,7 +40,7 @@ The data source for this project is the NYC TLC (Taxi and Limousine Commission) 
 **Data Warehouse Star Schema**
 ![nyc_tlc_trip_star_schema](https://raw.githubusercontent.com/arjiomega/Data-Engineering-Project/refs/heads/main/resources/nyc_tlc_trip_star_schema.png)
 
-### ELT/ETL Process
+### ELT Process
 
 The ELT (Extract, Load, Transform) process for this project is as follows:
 
@@ -71,15 +71,6 @@ While specific use cases are still under exploration, potential benefits of the 
     Data Analysis: Analyzing NYC taxi trip data for trends, patterns, and insights.
     Reporting: Creating reports and visualizations for stakeholders using Google Looker Studio.
     Machine Learning: Implementing predictive models to forecast taxi demand, optimize routes, or analyze passenger behavior.
-
-### Challenges
-
-At present, there are no identified challenges or unique aspects of the project. However, potential challenges may include:
-
-    Data Quality: Ensuring the accuracy and completeness of the NYC TLC data.
-    Performance: Handling large volumes of data efficiently in BigQuery.
-    Integration: Seamlessly integrating various tools and technologies in the pipeline.
-
 
 ## Setup
 ### Setup Airflow
